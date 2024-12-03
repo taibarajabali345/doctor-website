@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Appointment</title>
+  <style>
+    /* Body and Background Styling */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('./image3.webp') no-repeat center center/cover;
+      height: 100vh; /* Full screen height */
+      display: flex;
+      justify-content: flex-start; /* Align items to the left */
+      align-items: center;
+      color: #333; /* Dark text for good contrast */
+    }
+
+    /* Main Container */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin-left: 50px; /* Shift the form towards the left */
+    }
+
+    /* Main Heading Styling */
+    h1 {
+      color: black; /* Soft blue */
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    /* Section Heading Styling */
+    h3 {
+      color: #3e3e3e; /* Dark gray */
+      text-align: center;
+      font-size: 1.5em;
+      margin-top: 0;
+    }
+
+    /* Form Styling */
+    form {
+      background-color: #fff;
+      padding: 60px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      width: 320px;
+    }
+
+    /* Form Label Styling */
+    form label {
+      display: block;
+      font-size: 1.1em;
+      margin-bottom: 5px;
+      color: #555;
+    }
+
+    /* Input Fields Styling */
+    form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      font-size: 1em;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    /* Button Styling */
+    form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #4CAF50; /* Soft Green */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+
+    /* Button Hover Effect */
+    form button:hover {
+      background-color: #45a049;
+    }
+
+    /* Confirmation Message Styling */
+    #confirmation {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2d6a4f; /* Green for success */
+      display: none; /* Hidden by default */
+    }
+
+    /* Responsive Design: Smaller devices */
+    @media (max-width: 600px) {
+      .container {
+        margin-left: 20px; /* Adjust for smaller screens */
+      }
+
+      form {
+        width: 90%;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      h3 {
+        font-size: 1.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Book an Appointment</h1>
+
+    <form id="appointmentForm">
+      <h3>Your Information</h3>
+      
+      <h3>Book an Appointment with Dr. Smith</h3>
+      <label for="patientName">Your Name:</label>
+      <input type="text" id="patientName" required><br/>
+
+      <label for="patientContact">Your Contact:</label>
+      <input type="text" id="patientContact" required><br/>
+
+      <label for="appointmentDate">Select Date:</label>
+      <input type="date" id="appointmentDate" required><br/>
+
+      <label for="appointmentTime">Select Time:</label>
+      <input type="time" id="appointmentTime" required><br/>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <p id="confirmation">Your appointment has been booked successfully!</p>
+  </div>
+
+  <script type="module">
+    // Firebase imports
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCI4lF0IYd7knxNruSJixApS8m6vvJwGPM",
+      authDomain: "five-project-1f831.firebaseapp.com",
+      projectId: "five-project-1f831",
+      storageBucket: "five-project-1f831.firebasestorage.app",
+      messagingSenderId: "688942507348",
+      appId: "1:688942507348:web:6f604c697998ed049bd4c1"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    // Handle the appointment form submission
+    document.getElementById('appointmentForm').addEventListener('submit', async function(event) {
+      event.preventDefault(); // Prevent default form submission
+
+      // Get form values
+      const patientName = document.getElementById('patientName').value;
+      const patientContact = document.getElementById('patientContact').value;
+      const appointmentDate = document.getElementById('appointmentDate').value;
+      const appointmentTime = document.getElementById('appointmentTime').value;
+
+      // Validate form fields
+      if (patientName && patientContact && appointmentDate && appointmentTime) {
+        try {
+          // Save the appointment details to Firestore
+          await addDoc(collection(db, "appointments"), {
+            patientName,
+            patientContact,
+            date: appointmentDate,
+            time: appointmentTime,
+            doctorName: "Dr. Smith",
+          });
+
+          // Show confirmation message
+          document.getElementById('confirmation').style.display = 'block';
+
+          // Reset form fields
+          document.getElementById('appointmentForm').reset();
+        } catch (error) {
+          console.error("Error booking appointment: ", error);
+          alert("There was an error booking your appointment. Please try again.");
+        }
+      } else {
+        alert("Please fill out all fields before booking.");
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+

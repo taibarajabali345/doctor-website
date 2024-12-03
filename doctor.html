@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor's Appointments</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('./image3.webp') no-repeat center center/cover; 
+      background-size: cover;
+      background-position: center; 
+      background-attachment: fixed; 
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; 
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    h3 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #fff; 
+      color: #333;
+      text-align: center;
+    }
+
+    .appointments-container {
+      width: 80%;
+      max-width: 800px;
+      background-color: rgba(255, 255, 255, 0.8); 
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .appointment {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #fff;
+    }
+
+    .appointment div {
+      margin-left: 20px;
+    }
+
+    .appointment h4 {
+      margin: 0;
+      color: #333;
+    }
+
+    .appointment p {
+      margin: 5px 0;
+      color: #666;
+    }
+
+    .background-options {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .background-options input,
+    .background-options button {
+      padding: 10px;
+      margin: 5px;
+      width: 300px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+    }
+
+    .background-options button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .background-options button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>Patients Appointments </h1>
+  <div class="appointments-container" id="appointmentsContainer">
+    <h3>Upcoming Appointments</h3>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCI4lF0IYd7knxNruSJixApS8m6vvJwGPM",
+      authDomain: "five-project-1f831.firebaseapp.com",
+      projectId: "five-project-1f831",
+      storageBucket: "five-project-1f831.firebasestorage.app",
+      messagingSenderId: "688942507348",
+      appId: "1:688942507348:web:6f604c697998ed049bd4c1"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore();
+
+    async function displayAppointments() {
+      const appointmentsCollection = collection(db, "appointments");
+      const appointmentSnapshot = await getDocs(appointmentsCollection);
+      const appointmentsList = appointmentSnapshot.docs.map(doc => doc.data());
+
+      const appointmentsContainer = document.getElementById("appointmentsContainer");
+
+      if (appointmentsList.length === 0) {
+        appointmentsContainer.innerHTML += "<p>No appointments booked yet.</p>";
+      } else {
+        appointmentsList.forEach(appointment => {
+          const appointmentDiv = document.createElement("div");
+          appointmentDiv.className = "appointment";
+
+          appointmentDiv.innerHTML = `
+            <div>
+              <h4>Patient: ${appointment.patientName}</h4>
+              <p>Contact: ${appointment.patientContact}</p>
+              <p>Date: ${appointment.date}</p>
+              <p>Time: ${appointment.time}</p>
+            </div>
+          `;
+
+          appointmentsContainer.appendChild(appointmentDiv);
+        });
+      }
+    }
+
+    displayAppointments();
+  </script>
+</body>
+</html>
+
+
+

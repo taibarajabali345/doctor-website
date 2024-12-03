@@ -1,0 +1,129 @@
+body {
+font-family: 'Poppins', Arial, sans-serif;
+margin: 0;
+padding: 0;
+background: linear-gradient(145deg, #1a237e, #880e4f); /* Dark blue to dark pink */
+color: #f3e5f5;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 100vh;
+box-sizing: border-box;
+}
+
+h1 {
+color: #f3e5f5;
+margin-bottom: 20px;
+font-size: 2.5rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+/* Form Styling */
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+width: 100%;
+max-width: 300px;
+padding: 12px;
+margin: 12px 0;
+border: 1px solid #4a148c; /* Dark pink border */
+border-radius: 8px;
+font-size: 16px;
+box-sizing: border-box;
+background-color: #283593; /* Dark blue background */
+color: #f3e5f5;
+box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+outline: none;
+box-shadow: 0 0 8px rgba(243, 229, 245, 0.8);
+transform: scale(1.02);
+}
+
+input[type="radio"] {
+margin-right: 8px;
+accent-color: #d81b60; /* Vibrant pink */
+}
+
+label {
+font-size: 16px;
+margin-right: 15px;
+color: #f3e5f5;
+}
+
+/* Role Section Styling */
+.role-container {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+margin: 12px 0;
+padding: 10px;
+border: 1px solid #4a148c; /* Dark pink border */
+border-radius: 8px;
+background-color: #1a237e; /* Dark blue background */
+color: #f3e5f5;
+}
+
+.role-container label {
+margin-bottom: 5px;
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+button {
+background: linear-gradient(145deg, #d81b60, #ad1457); /* Vibrant pink gradient */
+color: white;
+padding: 12px 24px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+font-size: 16px;
+margin-top: 12px;
+transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+background: linear-gradient(145deg, #ad1457, #d81b60);
+transform: translateY(-2px);
+}
+
+a {
+color: #d81b60;
+text-decoration: none;
+margin: 10px;
+font-size: 14px;
+transition: color 0.3s ease;
+}
+
+a:hover {
+color: #ad1457;
+text-decoration: underline;
+}
+
+/* List of Users */
+#users-list {
+width: 100%;
+max-width: 600px;
+margin-top: 20px;
+background: linear-gradient(145deg, #283593, #1a237e); /* Dark blue gradient */
+border: 1px solid #1a237e;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+#users-list div {
+padding: 12px;
+border-bottom: 1px solid #1a237e;
+color: #f3e5f5;
+}
+
+#users-list div:last-child {
+border-bottom: none;
+}
